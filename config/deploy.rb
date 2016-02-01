@@ -1,5 +1,10 @@
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'elvinosuk'
+set :scm, :git
+set :repository, "git@github.com:elvinos/elvinosuk.git"
+set :branch, "stable"
+set :repository_cache, "git_cache"
+set :deploy_via, :remote_cache
+set :ssh_options, { :forward_agent => true }
 
 # Branch options
 # Prompts for the branch name (defaults to current branch)
@@ -16,9 +21,15 @@ set :log_level, :info
 
 # Apache users with .htaccess files:
 # it needs to be added to linked_files so it persists across deploys:
-# set :linked_files, fetch(:linked_files, []).push('.env', 'web/.htaccess')
+set :linked_files, fetch(:linked_files, []).push('.env', 'web/.htaccess')
 set :linked_files, fetch(:linked_files, []).push('.env')
 set :linked_dirs, fetch(:linked_dirs, []).push('web/app/uploads')
+
+set :ssh_options, {
+  forward_agent: true,
+  paranoid: true,
+  keys: "~/.ssh/id_rsa"
+}
 
 namespace :deploy do
   desc 'Restart application'
